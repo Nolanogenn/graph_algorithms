@@ -50,13 +50,10 @@ const shortestPath_breadthFirst = (edges, src, dst) => {
 	adjMatrix = edges2adjmatrix(edges);
 	console.log(adjMatrix);
 	var shortestPaths = {};
-	const stack = [[src, 0, 'root']];
+	const queue = [[src, 0, 'root']];
 
-	while (stack.length > 0){
-		const currentNode = stack.shift();
-		node = currentNode[0];
-		const distance = currentNode[1];
-		const previousNode = currentNode[2]
+	while (queue.length > 0){
+		const [node, distance, previousNode] = queue.shift();
 		if (!(node in shortestPaths)){
 			shortestPaths[node] = [distance, previousNode];
 		}
@@ -71,7 +68,8 @@ const shortestPath_breadthFirst = (edges, src, dst) => {
 		else{
 			const newDistance = distance + 1;
 			for (let neighbor of adjMatrix[node]){
-					stack.push([neighbor, newDistance, node])
+				const toAdd = [neighbor, newDistance, node];
+				queue.push(toAdd)
 					}
 				}
 		
